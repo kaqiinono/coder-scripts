@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 function readFileList(root = process.cwd(), dir, filesList = {}) {
-    // console.log('dir', dir);
+    console.log('dir', dir);
     const files = fs.readdirSync(dir);
     files.forEach((item, index) => {
         const fullPath = path.join(dir, item);
@@ -104,7 +104,6 @@ async function genProps(entry, root = process.cwd()) {
     await genJCodeFiles(finalRet, root);
 }
 
-// genProps(path.join(process.cwd(), 'meinuo20230128'));
 module.exports = {
     genProps,
 };

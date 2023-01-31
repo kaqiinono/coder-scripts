@@ -3,13 +3,13 @@
 const shell = require('shelljs');
 const root = process.cwd();
 
-function execute(cmd, opt = {}) {
+async function execute(cmd, opt = {}) {
     const cmdProps = {
         cwd: root,
         // silent: true,
         ...opt,
     };
-    const { stdout, stderr, code } = shell.exec(cmd, cmdProps);
+    const { stdout, stderr, code } = await shell.exec(cmd, cmdProps);
 
     return { stdout, stderr, code };
 }
