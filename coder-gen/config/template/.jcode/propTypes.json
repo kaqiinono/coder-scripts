@@ -1,0 +1,14 @@
+{
+  "Demo": [
+    {
+      "_name": "size",
+      "_type": "string",
+      "defaultValue": "large"
+    },
+    {
+      "_name": "title",
+      "_type": "string",
+      "defaultValue": "meinuo test"
+    }
+  ]
+}

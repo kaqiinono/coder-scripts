@@ -1,0 +1,25 @@
+{
+  "name": "@jd/demo",
+  "main": ".jcode/main.js",
+  "version": "2.1.2",
+  "dependencies": {
+    "@jd/jmtd": "1.27.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "peerDependency": {
+    "react": "*",
+    "react-dom": "*",
+    "@jd/jmtd": "*"
+  },
+  "scripts": {
+    "start": "jcoder start --entry=index.js",
+    "build": "jcoder build --entry=index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    ".jcode"
+  ]
+}

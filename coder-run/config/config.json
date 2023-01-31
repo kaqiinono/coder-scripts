@@ -1,0 +1,10 @@
+{
+  "host": "http://coder.jd.com",
+  "proxy": {
+    "api/": {
+      "secure": true,
+      "changeOrigin": true,
+      "target": "http://coder.jd.com"
+    }
+  }
+}
