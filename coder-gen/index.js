@@ -5,7 +5,7 @@ const { inputIn } = require('../utils/interaction');
 
 const exeRoot = process.cwd();
 
-async function run() {
+async function coderGen() {
     const templateFolder = path.resolve(__dirname, 'config');
     const projectName = await inputIn(`请输入项目名称`);
     const projectRootDir = path.join(exeRoot, projectName);
@@ -17,6 +17,4 @@ async function run() {
     return projectName;
 }
 
-run().then(projectName => {
-    console.log(chalk.green(`${projectName}项目已创建成功！`));
-});
+module.exports = coderGen;
