@@ -13,8 +13,8 @@
     "@jd/jmtd": "*"
   },
   "scripts": {
-    "start": "../../../coder-pack/bin/run-scripts.js start --share",
-    "build": "../../../coder-pack/bin/run-scripts.js build --share",
+    "start": "jcoder start --share",
+    "build": "jcoder build --share",
     "prepublishOnly": "npm run build"
   },
   "files": [
