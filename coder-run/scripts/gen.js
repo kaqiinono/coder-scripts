@@ -13,12 +13,19 @@ coderGen()
         }
         const projectRootDir = path.join(exeRoot, projectName);
         // await execute(`npm init`, { cwd: projectRootDir });
+        console.log('开始编译，请耐心等待...');
         execute(`npm install @jd/coder-scripts && npm install`, { cwd: projectRootDir }).then(
             () => {
+                console.log();
+                console.log(
+                    chalk.green(`npm run start 启动项目
+jcoder props 自动生成嵌入页面开发平台需要的配置文件
+                    `),
+                );
                 process.exit();
             },
         );
     })
     .catch(e => {
-        console.error(chalk.red(`项目已创建失败，请联系songmeinuo！`), e);
+        console.error(chalk.red(`项目创建失败，请联系songmeinuo！`), e);
     });

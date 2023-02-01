@@ -1,10 +1,9 @@
 const path = require('path');
 const fs = require('fs-extra');
-const paths = require('../coder-run/config/paths.js');
 const { execute } = require('../utils/shelljs/execute.js');
 const { inputIn } = require('../utils/interaction');
 
-const exeRoot = paths.appPath;
+const exeRoot = process.cwd();
 
 async function coderGen() {
     const templateFolder = path.resolve(__dirname, 'config/template');
@@ -15,9 +14,9 @@ async function coderGen() {
 
         const pkgPath = `${templateFolder}/package.json`;
         const prPkgPath = path.join(exeRoot, projectName, 'package.json');
-        const pkg = require(`${pkgPath}`);
-        pkg.name = `@jd/${projectName}`;
         await execute(`cp -r ${templateFolder}/* ${projectRootDir}`, { cwd: projectRootDir });
+        const pkg = require(`${prPkgPath}`);
+        pkg.name = `@jd/${projectName}`;
         fs.writeFileSync(prPkgPath, JSON.stringify(pkg, null, 2));
     } else {
         throw new Error(`名称输入异常！`);

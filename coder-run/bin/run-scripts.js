@@ -35,7 +35,7 @@ if (['build', 'eject', 'start', 'test', 'gen', 'props'].includes(script)) {
         process.execPath,
         nodeArgs
             .concat(require.resolve('../scripts/' + script))
-            .concat(args.slice(scriptIndex + 1)),
+            .concat(args.slice(scriptIndex + 1).concat(script)),
         { stdio: 'inherit' },
     );
     if (result.signal) {
