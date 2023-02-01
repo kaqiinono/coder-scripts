@@ -1,6 +1,6 @@
 {
   "name": "@jd/coder-scripts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "scripts for coder only",
   "main": "index.js",
   "scripts": {
