@@ -9,7 +9,7 @@
     "start": "../../../coder-pack/bin/run-scripts.js start --entry=src/index"
   },
   "bin": {
-    "jcoder": "coder-pack/bin/run-scripts.js"
+    "jcoder": "coder-run/bin/run-scripts.js"
   },
   "repository": {
     "type": "git",

@@ -1,13 +1,12 @@
 const fs = require('fs-extra');
 const path = require('path');
-const paths = require('../coder-pack/config/paths.js');
+const paths = require('../coder-run/config/paths.js');
 const chalk = require('chalk');
+const { getArgs } = require('../utils');
 const { radioSelector } = require('../utils/interaction');
-const { inputIn } = require('../utils/interaction');
 const { validFile, generate, findExports } = require('proptypes-generator');
 
 function readFileList(root = process.cwd(), dir, filesList = {}) {
-    console.log('dir====>', dir);
     const files = fs.readdirSync(dir);
     files.forEach(item => {
         const fullPath = path.join(dir, item);
@@ -17,7 +16,7 @@ function readFileList(root = process.cwd(), dir, filesList = {}) {
             if (stat.isDirectory()) {
                 readFileList(root, path.join(dir, item), filesList); //递归读取文件
             } else if (/\.(js|jsx|ts|tsx)$/.test(fullPath)) {
-                console.log('fullPath', fullPath);
+                console.log('find exports in ', fullPath);
                 filesList[fullPath.replace(root, '')] = {
                     path: fullPath,
                     relativePath,
@@ -64,8 +63,8 @@ function genJCodeFiles(genConfigData) {
     if (importCode.length > 0) {
         newCode = `${importCode.join('\n')}\nexport { ${Object.keys(propsData).join(',')} };\n`;
 
-        console.log('导出信息文件已自动生成', exportPathAbsolute);
-        console.log('导出信息文件已自动生成', mainPathAbsolute);
+        console.log(chalk.green('导出信息文件已自动生成', exportPathAbsolute));
+        console.log(chalk.green('导出信息文件已自动生成', mainPathAbsolute));
         fs.ensureFileSync(exportPathAbsolute);
         fs.ensureFileSync(mainPathAbsolute);
         fs.writeFileSync(exportPathAbsolute, newCode);
@@ -75,10 +74,11 @@ function genJCodeFiles(genConfigData) {
     }
 }
 
-async function genProps(entry) {
-    console.info(chalk.yellow.bold(`.jcode配置文件作用于页面开发平台，请正确配置！`));
-    const genConfirmInfo = await radioSelector(`是否重新生成.jcode配置文件？`, ['yes', 'no']);
-    if (genConfirmInfo === 'yes') {
+async function genProps() {
+    // console.info(chalk.yellow.bold(`.jcode配置文件作用于页面开发平台，请正确配置！`));
+    // const genConfirmInfo = await radioSelector(`是否重新生成.jcode配置文件？`, ['yes', 'no']);
+    const entry = paths.appIndexJs.replace(paths.appPath, '');
+    if (getArgs().force || !fs.pathExistsSync(paths.jcode)) {
         const root = paths.appPath;
         const files = {};
 
@@ -97,6 +97,13 @@ async function genProps(entry) {
         }
 
         await genJCodeFiles(finalRet);
+        if (!fs.pathExistsSync(paths.jcode)) {
+            throw new Error(`.jcode配置文件不存在，可以执行jcdoer props命令重新生成！`);
+        }
+    } else {
+        console.info(chalk.red.bold(`检测到.jcode配置文件(作用于页面开发平台)已存在！`));
+        console.info(chalk.red.bold(`确认.jcode配置文件已正确配置，否则无法正常使用！`));
+        console.info(chalk.red.bold(`路径：${paths.jcode}`));
     }
 }
 

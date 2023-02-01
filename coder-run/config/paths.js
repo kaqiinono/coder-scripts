@@ -111,6 +111,7 @@ module.exports = {
     appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
     ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
     devConfig: path.resolve(__dirname, 'dev.config.json'),
+    jcode: resolveApp('.jcode/main.js'),
 };
 
 const reactScriptsPath = resolveApp(`node_modules/react-scripts.js`);

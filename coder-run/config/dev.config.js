@@ -68,8 +68,29 @@ async function beforeRun(root = exeRoot) {
     await setRunConfig(root);
 }
 
+function findEntry(entry, root = exeRoot) {
+    if (/.*\.(js|ts|jsx|tsx)/.test(entry)) {
+        return entry;
+    } else {
+        if (fs.pathExistsSync(path.join(root, entry, 'js'))) {
+            return `${entry}.js`;
+        }
+        if (fs.pathExistsSync(path.join(root, entry, 'ts'))) {
+            return `${entry}.ts`;
+        }
+        if (fs.pathExistsSync(path.join(root, entry, 'jsx'))) {
+            return `${entry}.jsx`;
+        }
+        if (fs.pathExistsSync(path.join(root, entry, 'tsx'))) {
+            return `${entry}.tsx`;
+        }
+    }
+    return null;
+}
+
 module.exports = {
     getHost,
     getProxyConfig,
     beforeRun,
+    findEntry,
 };
