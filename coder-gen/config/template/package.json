@@ -8,18 +8,30 @@
     "react-dom": "^17.0.0"
   },
   "peerDependency": {
-    "react": "*",
-    "react-dom": "*",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0",
     "@jd/jmtd": "*"
   },
   "scripts": {
-    "start": "jcoder start --entry=index.js",
-    "build": "jcoder build --entry=index.js",
+    "start": "../../../coder-pack/bin/run-scripts.js start --share",
+    "build": "../../../coder-pack/bin/run-scripts.js build --share",
     "prepublishOnly": "npm run build"
   },
   "files": [
     "dist",
     "package.json",
     ".jcode"
-  ]
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
