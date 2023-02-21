@@ -2,6 +2,10 @@ function getArgs() {
     return require('minimist')(process.argv.slice(2)) || {};
 }
 
+function isShare() {
+    return getArgs().share;
+}
+
 function getPkgInfo(root) {
     const { name: originName, ...rest } = require(`${root}/package.json`);
     let name = originName;
@@ -16,4 +20,5 @@ function getPkgInfo(root) {
 module.exports = {
     getArgs,
     getPkgInfo,
+    isShare,
 };

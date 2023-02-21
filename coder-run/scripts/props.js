@@ -1,7 +1,7 @@
 const paths = require('../config/paths.js');
 const chalk = require('chalk');
 const path = require('path');
-const { genProps } = require('../../props/props-gen.js');
+const { genProps } = require('./props/props-gen.js');
 
 genProps()
     .then(() => {

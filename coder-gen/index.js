@@ -12,7 +12,6 @@ async function coderGen() {
         const projectRootDir = path.join(exeRoot, projectName);
         fs.ensureDir(projectRootDir);
 
-        const pkgPath = `${templateFolder}/package.json`;
         const prPkgPath = path.join(exeRoot, projectName, 'package.json');
         await execute(`cp -r ${templateFolder}/* ${projectRootDir}`, { cwd: projectRootDir });
         const pkg = require(`${prPkgPath}`);

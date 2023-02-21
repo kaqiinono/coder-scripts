@@ -1,25 +1,35 @@
 const fs = require('fs-extra');
 const path = require('path');
-const paths = require('../coder-run/config/paths.js');
+const paths = require('../../config/paths.js');
 const chalk = require('chalk');
-const { getArgs } = require('../utils');
-const { radioSelector } = require('../utils/interaction');
+const { getArgs } = require('../../../utils');
 const { validFile, generate, findExports } = require('proptypes-generator');
 
-function readFileList(root = process.cwd(), dir, filesList = {}) {
+function excludeFolderFilter(relativePath, all) {
+    if (all) {
+        return /\/(dist|node_modules|build)/.test(relativePath);
+    }
+
+    return /\/(dist|.jcode|public|node_modules|build)/.test(relativePath);
+}
+
+function readFileList(root = process.cwd(), dir, filesList = {}, all) {
     const files = fs.readdirSync(dir);
     files.forEach(item => {
         const fullPath = path.join(dir, item);
         const stat = fs.statSync(fullPath);
         const relativePath = dir.replace(root, '');
-        if (!/\/(dist|.jcode|public|node_modules|build)/.test(relativePath)) {
+        if (!excludeFolderFilter(relativePath, all)) {
             if (stat.isDirectory()) {
                 readFileList(root, path.join(dir, item), filesList); //递归读取文件
-            } else if (/\.(js|jsx|ts|tsx)$/.test(fullPath)) {
-                console.log('find exports in ', fullPath);
+            } else if (
+                (all && !fullPath.includes(`/package-lock.json`)) ||
+                /\.(js|jsx|ts|tsx)$/.test(fullPath)
+            ) {
+                console.log('readFile in ', fullPath);
                 filesList[fullPath.replace(root, '')] = {
-                    path: fullPath,
-                    relativePath,
+                    // path: fullPath,
+                    // relativePath,
                     code: fs.readFileSync(fullPath).toString(),
                 };
             }

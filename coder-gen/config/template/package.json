@@ -3,14 +3,11 @@
   "main": ".jcode/main.js",
   "version": "2.1.2",
   "dependencies": {
-    "@jd/jmtd": "1.27.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "antd": "^5.2.2"
   },
   "peerDependency": {
     "react": ">=16.9.0",
-    "react-dom": ">=16.9.0",
-    "@jd/jmtd": "*"
+    "react-dom": ">=16.9.0"
   },
   "scripts": {
     "start": "jcoder start --share",

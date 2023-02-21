@@ -195,22 +195,6 @@ module.exports = function (webpackEnv) {
         return loaders;
     };
 
-    const { pkgName: packageName } = getPkgInfo(paths.appPath);
-
-    let outputType = {
-        filename: isEnvProduction
-            ? 'static/js/[name].[contenthash:8].js'
-            : isEnvDevelopment && 'static/js/bundle.js',
-    };
-
-    if (Args.share) {
-        outputType = {
-            filename: `ShareCode.${packageName}.js`,
-            library: Args.share ? ['ShareCode', `${packageName}`] : undefined,
-            libraryTarget: 'umd',
-        };
-    }
-
     return {
         target: ['browserslist'],
         // Webpack noise constrained to errors and warnings
@@ -227,7 +211,9 @@ module.exports = function (webpackEnv) {
         // This means they will be the "root" imports that are included in JS bundle.
         entry: paths.appIndexJs,
         output: {
-            ...outputType,
+            filename: isEnvProduction
+                ? 'static/js/[name].[contenthash:8].js'
+                : isEnvDevelopment && 'static/js/bundle.js',
             // The build folder.
             path: paths.appBuild,
             // Add /* filename */ comments to generated require()s in the output.
@@ -794,5 +780,10 @@ module.exports = function (webpackEnv) {
         // Turn off performance processing because we utilize
         // our own hints via the FileSizeReporter
         performance: false,
+        externals: {
+            react: 'react',
+            reactDOM: 'react-dom',
+            '@jd/jmtd': '@jd/jmtd',
+        },
     };
 };

@@ -1,13 +1,12 @@
 import React from 'react';
-import { Button } from '@jd/jmtd';
-import '@jd/jmtd/dist/themes/default.css';
+import { Button } from 'antd';
 import './styles.css';
 
-export default function Demo({ large, title }) {
+function Demo({ size, title }) {
     return (
         <div className='jmtd-button-demo'>
             <h1>{title}xxx=</h1>
-            <Button semantic='primary' size='large'>
+            <Button semantic='primary' size={size}>
                 large
             </Button>
         </div>
@@ -18,3 +17,5 @@ Demo.defaultProps = {
     size: 'large',
     title: 'meinuo test',
 };
+
+export default Demo;
