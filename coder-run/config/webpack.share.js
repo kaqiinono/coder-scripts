@@ -1,21 +1,29 @@
 const paths = require('./paths.js');
 const { getPkgInfo } = require('../../utils');
-const { pkgName: packageName } = getPkgInfo(paths.appPath);
+const { pkgName: packageName, version } = getPkgInfo(paths.appPath);
 const { merge } = require('webpack-merge');
 const common = require('./webpack.config');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function (webpackEnv) {
     return merge(common(webpackEnv), {
         entry: path.resolve(paths.appPath, '.jcode/main.js'),
         output: {
-            // path: '/Users/songmeinuo/experiment/component-render/public',
             library: ['ShareCode', `${packageName}`],
             // libraryExport: 'default',
             libraryTarget: 'umd',
-            filename: '[name].js',
-            chunkFilename: '[name]/index-[contenthash:8].js',
+            filename: `[name].js`,
+            chunkFilename: `[name].chunck.js`,
         },
+        plugins: [
+            new MiniCssExtractPlugin({
+                // Options similar to the same options in webpackOptions.output
+                // both options are optional
+                filename: `[name].css`,
+                chunkFilename: `[name].chunk.css`,
+            }),
+        ],
         // optimization: {
         //     minimize: true,
         //     minimizer: [
@@ -52,7 +60,7 @@ module.exports = function (webpackEnv) {
                     root: 'ReactDOM',
                 },
             },
-            /jd\/jmtd/i,
+            /^@jd\/jmtd$/i,
         ],
     });
 };

@@ -37,6 +37,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash.js');
+const { isShare } = require('../../utils');
 const { getArgs } = require('../../utils');
 const { getPkgInfo } = require('../../utils');
 const Args = getArgs();
@@ -115,7 +116,7 @@ module.exports = function (webpackEnv) {
     // common function to get style loaders
     const getStyleLoaders = (cssOptions, preProcessor) => {
         let styleLoader = require.resolve('style-loader');
-        if (isEnvProduction && !Args.share) {
+        if (isEnvProduction) {
             styleLoader = {
                 loader: MiniCssExtractPlugin.loader,
                 // css is located in `static/css`, use '../../' to locate index.html folder
@@ -656,6 +657,7 @@ module.exports = function (webpackEnv) {
             // See https://github.com/facebook/create-react-app/issues/240
             isEnvDevelopment && new CaseSensitivePathsPlugin(),
             isEnvProduction &&
+                !isShare() &&
                 new MiniCssExtractPlugin({
                     // Options similar to the same options in webpackOptions.output
                     // both options are optional
