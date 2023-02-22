@@ -1,13 +1,11 @@
 {
   "name": "@jd/demo",
-  "main": ".jcode/main.js",
+  "main": "dist/main.js",
   "version": "2.1.2",
   "dependencies": {
-    "antd": "^5.2.2"
-  },
-  "peerDependency": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "@jd/jmtd": "^1.28.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
   },
   "scripts": {
     "start": "jcoder start --share",

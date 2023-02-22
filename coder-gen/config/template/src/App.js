@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from '@jd/jmtd';
 import './styles.css';
 
 function Demo({ size, title }) {
