@@ -1,9 +1,17 @@
-function getArgs() {
-    return require('minimist')(process.argv.slice(2)) || {};
-}
+const Args = require('minimist')(process.argv.slice(2)) || {};
 
-function isShare() {
-    return getArgs().share;
+console.log('命令传参：', Args);
+
+function getConfigMiddleName() {
+    if (Args.share) {
+        return `share`;
+    }
+
+    if (Args.component) {
+        return `component`;
+    }
+
+    return `config`;
 }
 
 function getPkgInfo(root) {
@@ -17,8 +25,13 @@ function getPkgInfo(root) {
     return { pkgName: name, name: originName, ...rest };
 }
 
+function noEslint() {
+    return Args.force;
+}
+
 module.exports = {
-    getArgs,
+    Args,
     getPkgInfo,
-    isShare,
+    getConfigMiddleName,
+    noEslint,
 };

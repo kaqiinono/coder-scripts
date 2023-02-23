@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const paths = require('../../config/paths.js');
 const chalk = require('chalk');
-const { getArgs } = require('../../../utils');
+const { Args } = require('../../../utils');
 const { validFile, generate, findExports } = require('proptypes-generator');
 
 function excludeFolderFilter(relativePath, all) {
@@ -85,10 +85,13 @@ function genJCodeFiles(genConfigData) {
 }
 
 async function genProps() {
+    if (!(Args._[0] === 'props' || Args.share)) {
+        return;
+    }
     // console.info(chalk.yellow.bold(`.jcode配置文件作用于页面开发平台，请正确配置！`));
     // const genConfirmInfo = await radioSelector(`是否重新生成.jcode配置文件？`, ['yes', 'no']);
     const entry = paths.appIndexJs.replace(paths.appPath, '');
-    if (getArgs().force || !fs.pathExistsSync(paths.jcode)) {
+    if (Args.overwrite || !fs.pathExistsSync(paths.jcode)) {
         const root = paths.appPath;
         const files = {};
 

@@ -26,8 +26,8 @@ const chalk = require('react-dev-utils/chalk');
 const fs = require('fs-extra');
 const bfj = require('bfj');
 const webpack = require('webpack');
-const { isShare } = require('../../utils');
-const configFactory = require(`../config/webpack.${isShare() ? 'share' : 'config'}.js`);
+const { getConfigMiddleName } = require('../../utils');
+const configFactory = require(`../config/webpack.${getConfigMiddleName()}.js`);
 const paths = require('../config/paths.js');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -47,7 +47,8 @@ const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-    process.exit(1);
+    // process.exit(1);
+    console.log(chalk.yellowBright('系统未找到index或html文件，可能会存在问题，请检查！'));
 }
 
 const argv = process.argv.slice(2);

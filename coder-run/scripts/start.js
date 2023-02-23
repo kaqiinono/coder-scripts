@@ -50,7 +50,8 @@ const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
-    process.exit(1);
+    // process.exit(1);
+    console.log('系统未找到index和html文件，可能会存在问题，请检查！');
 }
 
 // Tools like Cloud9 rely on this.

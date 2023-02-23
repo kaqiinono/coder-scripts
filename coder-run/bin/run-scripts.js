@@ -57,7 +57,16 @@ if (['build', 'eject', 'start', 'test', 'gen', 'props', 'publish'].includes(scri
     }
     process.exit(result.status);
 } else {
-    console.log('Unknown script "' + script + '".');
-    console.log('Perhaps you need to update react-scripts?');
-    console.log('See: https://facebook.github.io/create-react-app/docs/updating-to-new-releases');
+    console.log(`
+    jcoder build/start/gen/props/publish 打包/启动/生成.jcode配置/生成props属性配置/发布
+    --share 代码共享，会自动根据src/index入口生成需要导出组件的.jcode相关配置
+    --component 打包组件，不会生成.jcode配置
+    --library 打包后的组件库名 可通过window[设置的组件库名访问]
+    --entry 打包文件的入口，也可以是文件夹，会自动获取文件夹一级子目录下的入口文件(index|main)
+    --overwrite 重写.jcode相关配置文件
+    --force 强制执行，忽略eslint等错误
+    
+    其他问题请联系songmeinuo@jd.com
+    
+    `);
 }

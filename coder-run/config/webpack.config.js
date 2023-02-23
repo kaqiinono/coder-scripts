@@ -37,10 +37,8 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash.js');
-const { isShare } = require('../../utils');
-const { getArgs } = require('../../utils');
-const { getPkgInfo } = require('../../utils');
-const Args = getArgs();
+const { Args } = require('../../utils');
+const { noEslint } = require('../../utils');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
@@ -657,7 +655,7 @@ module.exports = function (webpackEnv) {
             // See https://github.com/facebook/create-react-app/issues/240
             isEnvDevelopment && new CaseSensitivePathsPlugin(),
             isEnvProduction &&
-                !isShare() &&
+                !(Args.share || Args.component) &&
                 new MiniCssExtractPlugin({
                     // Options similar to the same options in webpackOptions.output
                     // both options are optional
@@ -762,7 +760,7 @@ module.exports = function (webpackEnv) {
                     extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
                     formatter: require.resolve('react-dev-utils/eslintFormatter'),
                     eslintPath: require.resolve('eslint'),
-                    failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
+                    failOnError: !((isEnvDevelopment && emitErrorsAsWarnings) || noEslint()),
                     context: paths.appSrc,
                     cache: true,
                     cacheLocation: path.resolve(paths.appNodeModules, '.cache/.eslintcache'),
